@@ -1,0 +1,8 @@
+.vscode/
+*.pdf
+6节*
+regular.py
+tetris_game/
+crawl/
+__pycache__/
+test.py
