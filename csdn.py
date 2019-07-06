@@ -3,12 +3,13 @@ import requests
 from bs4 import BeautifulSoup
 import time
 from tqdm import trange
+import click
 
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36'}
 
 
-def getPage(url):
-    html = requests.get(url, headers=headers).text
+def getPage(page_url, urls):
+    html = requests.get(page_url, headers=headers).text
     soup = BeautifulSoup(html, 'lxml')
     blog_list = soup.find(class_='article-list').find_all(class_='article-item-box csdn-tracking-statistics')
     for blog in blog_list:
@@ -21,11 +22,17 @@ def getPage(url):
         time.sleep(1)
 
 
-if __name__ == "__main__":
+@click.command()
+@click.option('--times', '-t', type=int, default=100, help='set read times')
+def main(times):
     urls = []
     for page in range(1, 2):
-        getPage(f'https://blog.csdn.net/chenf1999/article/list/{page}?')
-    for _ in trange(100):
+        getPage(f'https://blog.csdn.net/chenf1999/article/list/{page}?', urls)
+    for _ in trange(times):
         for url in urls:
             _ = requests.get(url, headers=headers)
             time.sleep(1)
+
+
+if __name__ == "__main__":
+    main()
