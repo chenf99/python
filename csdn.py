@@ -1,0 +1,31 @@
+# 刷csdn阅读量的脚本
+import requests
+from bs4 import BeautifulSoup
+import time
+from tqdm import trange
+
+headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36'}
+
+
+def getPage(url):
+    html = requests.get(url, headers=headers).text
+    soup = BeautifulSoup(html, 'lxml')
+    blog_list = soup.find(class_='article-list').find_all(class_='article-item-box csdn-tracking-statistics')
+    for blog in blog_list:
+        url = blog.find('h4').find('a').get('href')
+        if 'chenf1999' not in url:
+            continue
+        print(url)
+        urls.append(url)
+        _ = requests.get(url, headers=headers)
+        time.sleep(1)
+
+
+if __name__ == "__main__":
+    urls = []
+    for page in range(1, 2):
+        getPage(f'https://blog.csdn.net/chenf1999/article/list/{page}?')
+    for _ in trange(100):
+        for url in urls:
+            _ = requests.get(url, headers=headers)
+            time.sleep(1)
