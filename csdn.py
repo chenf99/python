@@ -7,7 +7,8 @@ import click
 from concurrent.futures import ProcessPoolExecutor
 
 
-headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36'}
+headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36',
+           'Cookie': 'xxx'}
 
 
 def getPage(page_url, urls):
@@ -33,7 +34,7 @@ def requestURL(url):
 @click.option('--times', '-t', type=int, default=100, help='set read times')
 def main(times):
     urls = []
-    for page in range(1, 2):
+    for page in range(1, 3):
         getPage(f'https://blog.csdn.net/chenf1999/article/list/{page}?', urls)
     for _ in trange(times):
         with ProcessPoolExecutor(4) as pool:
