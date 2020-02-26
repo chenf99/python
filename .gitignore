@@ -6,3 +6,4 @@ tetris_game/
 crawl/
 __pycache__/
 test.py
+google*
