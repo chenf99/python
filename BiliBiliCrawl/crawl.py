@@ -28,7 +28,7 @@ def next_page(page_num):
 
 
 def save_to_excel(soup):
-    infos = soup.find_all(class_='video matrix')
+    infos = soup.find_all(class_='video-item matrix')
     for info in infos:
         title = info.find('a').get('title')
         href = info.find('a').get('href')
@@ -72,8 +72,9 @@ if __name__ == '__main__':
     # home = browser.find_element(By.CLASS_NAME, 'home')
     # home.click()
     browser.refresh()
-    input = browser.find_element(By.CLASS_NAME, 'search-keyword')
-    button = browser.find_element(By.CLASS_NAME, 'search-submit')
+
+    input = browser.find_element(By.CLASS_NAME, 'nav-search-keyword')
+    button = browser.find_element(By.CSS_SELECTOR, 'div.nav-search-btn > button')
     input.send_keys('爱乐之城')
     button.click()
     all_h = browser.window_handles
