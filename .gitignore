@@ -7,3 +7,6 @@ crawl/
 __pycache__/
 test.py
 google*
+*.jpg
+*.mp4
+*.avi
